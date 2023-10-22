@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+  <title>车次信息</title>
+    <link rel="stylesheet" th:href="@{css/res.css}">
+</head>
+<body>
+        <div class="back">
+            <table>
+                <tr><th colspan="6">车次信息</th></tr>
+                <tr>
+                    <th>编号</th>
+                    <th>始发站</th>
+                    <th>终点站</th>
+                    <th>路程/km</th>
+                    <th>耗时/h</th>
+                    <th>票价/￥</th>
+                </tr>
+                <tr th:if="${#lists.isEmpty(recordList)}">
+                    <th colspan="6">对不起,不存在车次！！！</th>
+                </tr>
+                <tr th:unless="${#lists.isEmpty(recordList)}" th:each="record :  ${recordList}">
+                    <td th:text="${record.id}"></td>
+                    <td th:text="${record.start}"></td>
+                    <td th:text="${record.end}"></td>
+                    <td th:text="${record.distance}"></td>
+                    <td th:text="${record.time}"> </td>
+                    <td th:text="${record.money}"></td>
+                </tr>
+                <!-- 更多车次信息行 -->
+                <tr class="total-row">
+                    <td colspan="3">总计</td>
+                    <td th:text="${totalLen}">0</td>
+                    <td th:text="${totalTime}">0</td>
+                    <td th:text="${totalMoney}">0</td>
+                </tr>
+            </table>
+        </div>
+</body>
+</html>

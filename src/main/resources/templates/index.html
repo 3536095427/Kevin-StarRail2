@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+  <title>路径查询</title>
+  <link rel="stylesheet" th:href="@{css/index.css}">
+<!--      <link rel="stylesheet" href="/css/index.css">-->
+
+</head>
+<body>
+    <div class="Max">
+      <div class="container">
+        <div class="image-container">
+          <img src="img/trianload.png" alt="路径图">
+        </div>
+        <div class="login-container">
+          <h2>路径查询</h2>
+          <form action="user.do" th:action="@{/consult}" method="post">
+            <label style="color: red" th:text="${msg}"></label>
+            <label for="origin">始发站:</label>
+            <input required type="text" id="origin" name="start" th:text="${originMessage}" placeholder="请输入始发站">
+
+            <label for="destination">终点站:</label>
+            <input required type="text" id="destination" name="destination" th:text="${destinationMessage}" placeholder="请输入目的站">
+
+            <label for="additional">选择:</label>
+            <input required type="text" id="additional" name="type" th:text="${typeMessage}" placeholder="最短路程//最少花费/最短时间">
+
+            <button type="submit">查询</button>
+            <div class="avatar">
+              <div class="personal-info">
+                <a th:href="@{/userInfo}">查看个人信息</a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="site-info">
+        <p>本网站版权所有 &copy; 2023,欢迎盗版</p>
+        <p>联系方式：info@example.com</p>
+        <p>地址：江西财经大学 双港西大街，南昌，中国</p>
+      </div>
+    </div>
+
+</body>
+</html>

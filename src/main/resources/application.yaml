@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: 'StarRail系统'
+
+  profiles:
+    group:
+      production[0]: datasource
+      production[1]: actuator
+      production[2]: admin
+      production[3]: server
+    active: production

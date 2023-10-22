@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8" />
+  <title>个人信息</title>
+  <link rel="stylesheet" th:href="@{css/Info.css}">
+
+</head>
+<body>
+  <div class="back">
+    <div class="container">
+
+      <div class="info-container">
+        <form id="login-form" action="user.do" method="get">
+
+            <img class="avatar-container" th:src="@{|img/${session.userBasic.getUserDetail().getImg()}|}" alt="头像" width="100px">
+<!--                                          th:src="@{|/imgs/${reply.author.headImg}|}"-->
+
+          <div class="info-section">
+
+            <label for="id">UID:</label>
+            <input type="text" id="id" name="id" th:value="${session.userBasic.getUserDetail().getId()}">
+
+            <label for="name">昵称:</label>
+            <input type="text" id="name" name="name" th:value="${session.userBasic.getUserDetail().getName()}">
+
+            <label for="moto">口头禅:</label>
+            <input type="text" id="moto" name="moto" th:value="${session.userBasic.getUserDetail().getMoto()}">
+
+            <label for="phone">联系方式:</label>
+            <input type="text" id="phone" name="phone" th:value="${session.userBasic.getUserDetail().getPhone()}">
+
+          </div>
+          <div class="info-section">
+            <label for="address">住址:</label>
+            <input type="text" id="address" name="address" th:value="${session.userBasic.getUserDetail().getAddress()}" >
+          </div>
+
+          <button type="submit">修改信息</button>
+
+
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
