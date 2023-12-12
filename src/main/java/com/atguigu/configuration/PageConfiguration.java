@@ -21,7 +21,7 @@ public class PageConfiguration implements WebMvcConfigurer {
 
     //将所有车站的信息放入容器中，以name为键
     @Bean("allStationsKeyName")
-    public HashMap<String, Station> getAllStationsKeyName(InfoInit infoInit) {
+    public HashMap<String, Station> getAllStationsKeyName( InfoInit infoInit) {
         return infoInit.InitStationsKeyName();
     }
 

@@ -2,6 +2,8 @@ package com.atguigu;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -12,3 +14,5 @@ public class StarRail2Application {
         ApplicationContext context = SpringApplication.run(StarRail2Application.class, args);
     }
 }
+
+

@@ -16,6 +16,10 @@ public class PageInterceptor implements HandlerInterceptor {
             return true;
         } else {
             System.out.println("拦截的请求是：" + request.getRequestURL().toString());
+            System.out.println(request.getAttribute("loginId"));
+            System.out.println(request.getAttribute("password"));
+            System.out.println(request.getParameter("loginId"));
+            System.out.println(request.getParameter("password"));
             request.setAttribute("msg", "请先登录账号");
             request.getRequestDispatcher("/").forward(request, response);
             return false;

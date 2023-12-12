@@ -10,8 +10,8 @@ spring:
 
       stat-view-servlet: # 配置监控页功能
         enabled: true
-        login-username: admin
-        login-password: admin
+        login-username: root
+        login-password: 123456
         resetEnable: false
 
       web-stat-filter: # 监控web
