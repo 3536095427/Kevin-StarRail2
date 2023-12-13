@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/buyTicket.css" th:href="@{css/buyTicket.css}">
+</head>
+    <body>
+        <div class="container">
+            <div class="ticket-info-form">
+                <h2>车票信息</h2>
+                <div class="info-item">
+                    <label>始发站：</label>
+                    <span id="start" th:text="${session.ticket.startStation}">hahah</span>
+                </div>
+                <div class="info-item">
+                    <label>终点站：</label>
+                    <span id="destination" th:text="${session.ticket.destinationStation}">hahah</span>
+                </div>
+                <div class="info-item">
+                    <label>发车时间：</label>
+                    <span id="startTime" th:text="${#temporals.format(session.ticket.startTime, 'MM月dd日 HH:mm')}">hahah</span>
+                </div>
+                <div class="info-item">
+                    <label>到站时间：</label>
+                    <span id="arrivalTime" th:text="${#temporals.format(session.ticket.arrivalTime, 'MM月dd日 HH:mm')}">hahah</span>
+                </div>
+                <div class="info-item">
+                    <label>耗时/h：</label>
+                    <span id="time" th:text="${session.ticket.time}">hahah</span>
+                </div>
+                <div class="info-item">
+                    <label>票价/￥：</label>
+                    <span id="price" th:text="${session.ticket.price}">hahah</span>
+                </div>
+            </div>
+            <div class="passenger-info-form">
+                <h2>添加乘车人</h2>
+                <!-- 乘车人信息表单 -->
+                <form id="buyTicket" th:action="@{/commitOrder}" method="get">
+                    <div class="form-group">
+                        <label for="name">姓名</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="id">身份证号</label>
+                        <input type="text" id="id" name="id" required>
+                    </div>
+                    <div id="buttonGroup">
+                        <button id="cancelBtn" class="cancel-btn" style="display: none;" onclick="cancelPurchase()">取消</button>
+                        <button type="submit" id="confirmBtn" style="display: none;" onclick="commit()">确认</button>
+                    </div>
+                    <button id="buyBtn" onclick="showConfirmButtons()">购买</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function showConfirmButtons() {
+                var buyBtn = document.getElementById('buyBtn');
+                var cancelBtn = document.getElementById('cancelBtn');
+                var confirmBtn = document.getElementById('confirmBtn');
+
+                buyBtn.style.display = 'none';
+                cancelBtn.style.display = 'inline-block';
+                confirmBtn.style.display = 'inline-block';
+
+                // 阻止表单默认提交行为
+                document.querySelector('form').addEventListener('submit', function(event) {
+                    event.preventDefault();
+                });
+            }
+
+            function cancelPurchase() {
+                var buyBtn = document.getElementById('buyBtn');
+                var cancelBtn = document.getElementById('cancelBtn');
+                var confirmBtn = document.getElementById('confirmBtn');
+
+                buyBtn.style.display = 'inline-block';
+                cancelBtn.style.display = 'none';
+                confirmBtn.style.display = 'none';
+            }
+
+            function commit(){
+                document.getElementById('buyTicket').submit();
+            }
+        </script>
+    </body>
+</html>

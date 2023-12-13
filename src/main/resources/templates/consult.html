@@ -4,12 +4,15 @@
 	<meta charset="utf-8" />
   <title>路径查询</title>
   <link rel="stylesheet" href="../static/css/consult.css" th:href="@{css/consult.css}">
+
 </head>
 <body>
     <div class="Max">
       <div class="container">
         <div class="image-container">
-          <img src="../static/img/trianload.png" th:src="@{img/trainload.png}" alt="路径图">
+          <img src="../static/img/city.png" th:src="@{img/city.png}" alt="路径图">
+<!--          <img src="../static/img/city.png"  alt="路径图">-->
+
         </div>
         <div class="login-container">
           <h2>车票查询</h2>
@@ -21,8 +24,8 @@
             <label for="destination">终点站:</label>
             <input required type="text" id="destination" name="destination" th:text="${destinationMessage}" placeholder="请输入目的站">
 
-<!--            <label for="additional">选择:</label>-->
-<!--            <input required type="text" id="additional" name="type" th:text="${typeMessage}" placeholder="最短路程//最少花费/最短时间">-->
+            <label for="date">出发日期:</label>
+            <input required type="date" id="date" name="date">
 
             <button type="submit">查询</button>
             <div class="avatar">
@@ -40,6 +43,21 @@
         <p>地址：江西财经大学 双港西大街，南昌，中国</p>
       </div>
     </div>
+
+    <script>
+      var today = new Date();
+      var maxDate = new Date();
+      maxDate.setDate(today.getDate() + 30); // 设置最大日期为今天加30天
+
+      document.getElementById('date').setAttribute('min', today.toISOString().split('T')[0]);
+      document.getElementById('date').setAttribute('max', maxDate.toISOString().split('T')[0]);
+
+      var year = today.getFullYear();
+      var month = (today.getMonth() + 1).toString().padStart(2, '0');
+      var day = today.getDate().toString().padStart(2, '0');
+      var formattedDate = `${year}-${month}-${day}`;
+      document.getElementById('date').setAttribute('value', formattedDate);
+    </script>
 
 </body>
 </html>

@@ -1,13 +1,19 @@
 package com.atguigu.logicalmodel.Controller;
 
 import com.atguigu.logicalmodel.Service.StationService;
-import com.atguigu.logicalmodel.Service.TravelService;
+import com.atguigu.logicalmodel.Service.TicketService;
+import com.atguigu.logicalmodel.pojo.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
 @Controller
 public class TravelPathController {
@@ -16,65 +22,46 @@ public class TravelPathController {
     private StationService stationService;
 
     @Autowired
-    private TravelService travelService;
+    private TicketService ticketService;
 
     @RequestMapping("/consult")
-    public String consult(@RequestParam("start") String start,
+    public ModelAndView consult(@RequestParam("start") String start,
                           @RequestParam("destination") String destination,
-                          HttpServletRequest request) {
+                          @RequestParam("date") String startDate,
+                          HttpSession session,
+                          ModelAndView mav) {
 
         // 首先明确这个Controller需要向请求作用域中放入哪些信息
-        // 1.起始站点，终点站点
-        // 2.三种类型的车票
+        //  明确的随机车票
 
 
         if (!stationService.stationsAllExist(start, destination)) {
-            request.setAttribute("msg", "访问城市不存在");
-            return "consult";
+            mav.addObject("msg", "访问城市不存在");
+            mav.setViewName("consult");
+            return mav;
+        }
+
+        List<Ticket> tickets = null;
+
+        // 如果缓存中存在查询结果，直接返回
+        Object attribute = session.getAttribute(start+destination);
+        if (attribute instanceof List){
+            tickets = (List<Ticket>) attribute;
+        }else {
+            Random random = new Random();
+            // 车票的数量范围 5 - 10
+            int ticketsNum = random.nextInt(6) + 5;
+            tickets = ticketService.generateRandomTickets(LocalDate.parse(startDate), start, destination, 10);
+
+            // 讲起点和终点的字符串组合作为键，讲查询到的车票放入缓存
+            session.setAttribute(start+destination, tickets);
         }
 
 
-
-//        switch (type) {
-//            case "最短路程":
-//                return minRes(startStationId, destinationStationId, DistanceRectangle, numOfStations);
-//            case "最少花费":
-//                return minRes(startStationId, destinationStationId, MoneyRectangle, numOfStations);
-//            case "最短时间":
-//                return minRes(startStationId, destinationStationId, TimeRectangle, numOfStations);
-//        }
-//        return null;
-
-
-
-
-
-        //根据要求得到特定的路线数组
-        int[] pathArray = travelService.getPathArray(type, start, destination);
-
-
-        // 如果不存在路线，直接返回，无需计算资源和站点信息
-        if (pathArray.length == 0) {
-            return "res";
-        }
-
-        // 获取各个资源的总消耗
-        int totalLen = travelService.getTotalLenByPath(pathArray);
-        int totalMoney = travelService.getTotalMoneyByPath(pathArray);
-        int totalTime = travelService.getTotalTimeByPath(pathArray);
-
-        // 获取经过的站点信息
-        String pathStationInfo = travelService.getPathStationInfo(pathArray);
-
-
-        // 将获取的信息放入请求作用域
-        request.setAttribute("start", start);
-        request.setAttribute("destination", destination);
-        request.setAttribute("PassingPath", pathStationInfo);
-        request.setAttribute("totalLen",totalLen);
-        request.setAttribute("totalTime",totalTime);
-        request.setAttribute("totalMoney",totalMoney);
-
-        return "res";
+        mav.addObject("start",start);
+        mav.addObject("destination",destination);
+        mav.addObject("ticketList",tickets);
+        mav.setViewName("res");
+        return mav;
     }
 }

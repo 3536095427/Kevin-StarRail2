@@ -9,7 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class UserController {
@@ -30,24 +33,28 @@ public class UserController {
 
 
     @RequestMapping("/login")
-    public String login(@RequestParam("loginId") Integer loginId,
-                        @RequestParam("password") String password,
-                        HttpServletRequest request) {
+    public ModelAndView login(@RequestParam("loginId") Integer loginId,
+                              @RequestParam("password") String password,
+                              ModelAndView mav,
+                              HttpSession session) {
         UserBasic userBasic = userBasicService.Login(loginId, password);
 
         System.out.println("哈哈哈，成功进入登录方法");
 
         if (userBasic == null) {
             System.out.println("登陆失败");
-            return "login";
+            mav.setViewName("login");
+            return mav;
         } else {
 
             //将用户的具体信息从数据库导入
             userBasic.setUserDetail(userBasicService.getUserDetailById(userBasic.getId()));
 
-            request.getSession().setAttribute("userBasic", userBasic);
+
+            session.setAttribute("userBasic", userBasic);
             System.out.println("登陆成功");
-            return "consult";
+            mav.setViewName("consult");
+            return mav;
         }
     }
 

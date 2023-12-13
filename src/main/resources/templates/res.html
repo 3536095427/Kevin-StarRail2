@@ -5,30 +5,46 @@
   <title>车次信息</title>
     <link rel="stylesheet"  href="../static/css/res.css" th:href="@{css/res.css}">
 </head>
-<body>
+    <body>
         <div class="back">
             <table>
-                <tr><th colspan="5">车次信息</th></tr>
+                <tr><th colspan="7">车次信息</th></tr>
                 <tr>
-                    <th>始发站</th>
-                    <th>终点站</th>
-                    <th>路程/km</th>
+                    <th colspan="2">始发站：</th>
+                    <th th:text="${start}"></th>
+                    <th></th>
+                    <th colspan="2">终点站：</th>
+                    <th th:text="${destination}"></th>
+                </tr>
+                <tr>
+                    <th>编号</th>
+                    <th>发车时间</th>
+                    <th>到站时间</th>
                     <th>耗时/h</th>
+                    <th>路程/km</th>
                     <th>票价/￥</th>
+                    <th></th>
                 </tr>
-                <tr th:if="${totalLen} == 0">
-                    <th colspan="6">对不起,不存在车次！！！</th>
+                <tr th:if="${#lists.isEmpty(ticketList)}">
+                    <th colspan="7">对不起,不存在车次！！！</th>
                 </tr>
-                    <td th:text="${start}"></td>
-                    <td th:text="${destination}"></td>
-                    <td th:text="${totalLen}"></td>
-                    <td th:text="${totalTime}"></td>
-                    <td th:text="${totalMoney}"></td>
-                <tr>
-                    <td>路线信息：</td>
-                    <td colspan="5" th:text="${PassingPath}"></td>
+                <tr th:each="ticket, iterStat : ${ticketList}">
+                    <td th:text="${iterStat.count}"></td>
+                    <td th:text="${#temporals.format(ticket.startTime, 'MM月dd日 HH:mm')}"></td>
+                    <td th:text="${#temporals.format(ticket.arrivalTime, 'MM月dd日 HH:mm')}"></td>
+                    <td th:text="${ticket.time}"></td>
+                    <td th:text="${ticket.distance}"></td>
+                    <td th:text="${ticket.price}"></td>
+                    <td style="padding: 0">
+                        <form id="ticket-form" th:action="@{/buyTicket}" method="get"> <!-- 使用Thymeleaf的表达式设置action和method属性 -->
+                            <input type="hidden" name="ticketId" th:value="${ticket.ticketId}" /> <!-- 添加隐藏字段存储车票的ID -->
+                            <input type="hidden" name="startStation" th:value="${ticket.startStation}" /> <!-- 添加隐藏字段存储车票的ID -->
+                            <input type="hidden" name="destinationStation" th:value="${ticket.destinationStation}" /> <!-- 添加隐藏字段存储车票的ID -->
+                            <input type="submit" value="购买" /> <!-- 购买按钮 -->
+                        </form>
+                    </td>
                 </tr>
             </table>
         </div>
-</body>
+    </body>
 </html>

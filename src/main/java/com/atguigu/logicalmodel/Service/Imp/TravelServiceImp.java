@@ -3,11 +3,15 @@ package com.atguigu.logicalmodel.Service.Imp;
 
 import com.atguigu.logicalmodel.Service.StationService;
 import com.atguigu.logicalmodel.Service.TravelService;
+import com.atguigu.logicalmodel.pojo.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 @Service("travelService")
@@ -31,13 +35,41 @@ public class TravelServiceImp implements TravelService {
     private Integer[][] TimeRectangle;
 
 
+    // 获取生成随机车票所需要的车票因子
+    @Override
+    public List<Ticket> getTicketFactor(LocalDate startDate, String startStation, String destinationStation) {
+
+        String[] types = {"最少花费","最短时间","最短路程"};
+        List<Ticket> ticketFactors = new ArrayList<>(3);
+
+        // 获取到三种类型的车票因子
+        for(String type : types){
+
+            int[] pathArray = getPathArray(type, startStation, destinationStation);
+            int distance = getTotalLenByPath(pathArray);
+            int price = getTotalMoneyByPath(pathArray);
+
+
+            int time = getTotalTimeByPath(pathArray);
+            LocalTime spendTime = LocalTime.of(time/60, time%60);
+
+            String pathInfo = getPathStationInfo(pathArray);
+            LocalDateTime startTime = LocalDateTime.of(startDate, LocalTime.of(0, 0));
+
+            Ticket randomTicketFactor = new Ticket(startStation, destinationStation,startTime, distance, spendTime, price, pathInfo);
+            ticketFactors.add(randomTicketFactor);
+        }
+
+        return ticketFactors;
+    }
+
+
     //获取存储路过站点编号的数组
     public int[] getPathArray(String type, String beginStation, String destinationStation) {
 
         int numOfStations = stationService.getStationNum();
         int startStationId = stationService.getStationIdByName(beginStation);
         int destinationStationId = stationService.getStationIdByName(destinationStation);
-
 
         switch (type) {
             case "最短路程":
@@ -49,6 +81,16 @@ public class TravelServiceImp implements TravelService {
         }
         return null;
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -70,7 +112,6 @@ public class TravelServiceImp implements TravelService {
 
         return result.toString();
     }
-
 
 
 
@@ -121,6 +162,7 @@ public class TravelServiceImp implements TravelService {
     public int getTotalTimeByPath(int[] pathArray) {
        return getResourceConsume(pathArray, TimeRectangle);
     }
+
 
 
 

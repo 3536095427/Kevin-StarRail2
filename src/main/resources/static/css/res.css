@@ -30,3 +30,17 @@ th {
 .total-row {
     font-weight: bold;
 }
+
+input[type="submit"] {
+    background-color: #4CAF50; /* 设置背景颜色为绿色 */
+    color: white; /* 设置字体颜色为白色 */
+    padding: 10px 20px; /* 设置内边距 */
+    text-align: center; /* 文本居中 */
+    text-decoration: none; /* 去除下划线 */
+    display: inline-block;
+    font-size: 16px; /* 设置字体大小 */
+    margin: 5px 0;
+    cursor: pointer; /* 鼠标样式为手型 */
+    border-radius: 8px; /* 设置圆角半径 */
+    border: none; /* 去除边框 */
+}

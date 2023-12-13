@@ -72,3 +72,15 @@ button {
     margin-top: 900px;
     font-size: 18px;
 }
+
+
+input[type="date"] {
+    width: 200px; /* 根据需要调整宽度 */
+    height: 30px; /* 根据需要调整高度 */
+    margin-top: 10px; /* 根据需要调整上间距 */
+    margin-bottom: 10px; /* 根据需要调整下间距 */
+}
+
+.imghahah{
+    background-image: url("../img/city.png");
+}

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.logicalmodel.Mapper.StationMapper">
+    <!-- 在这里添加你的SQL映射 -->
+
+    <resultMap id="BaseMap" type="Station">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+    </resultMap>
+
+    <select id="getStationById" resultMap="BaseMap">
+        select id ,name from station where id = #{id};
+    </select>
+
+    <select id="getStationNameById" resultType="string">
+        select name from station where id = #{id};
+    </select>
+
+</mapper>
