@@ -36,7 +36,7 @@
                     <td th:text="${ticket.distance}"></td>
                     <td th:text="${ticket.price}"></td>
                     <td style="padding: 0">
-                        <form id="ticket-form" th:action="@{/buyTicket}" method="get"> <!-- 使用Thymeleaf的表达式设置action和method属性 -->
+                        <form id="ticket-form" th:action="@{/ticketList}" method="get"> <!-- 使用Thymeleaf的表达式设置action和method属性 -->
                             <input type="hidden" name="ticketId" th:value="${ticket.ticketId}" /> <!-- 添加隐藏字段存储车票的ID -->
                             <input type="hidden" name="startStation" th:value="${ticket.startStation}" /> <!-- 添加隐藏字段存储车票的ID -->
                             <input type="hidden" name="destinationStation" th:value="${ticket.destinationStation}" /> <!-- 添加隐藏字段存储车票的ID -->

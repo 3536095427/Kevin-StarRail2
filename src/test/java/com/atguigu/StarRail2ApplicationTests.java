@@ -1,11 +1,58 @@
 package com.atguigu;
 
+import com.atguigu.logicalmodel.Service.OrderService;
+import com.atguigu.logicalmodel.Service.UserBasicService;
+import com.atguigu.logicalmodel.pojo.Order;
+import com.atguigu.logicalmodel.pojo.Ticket;
+import com.atguigu.logicalmodel.pojo.UserBasic;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.mockito.internal.matchers.Or;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import sun.text.resources.da.FormatData_da;
+
+import java.util.List;
 
 
 @SpringBootTest
 class StarRail2ApplicationTests {
+
+    @Autowired
+    private OrderService orderService;
+
+    @Test
+    void test(){
+
+        UserBasic userBasic = new UserBasic();
+        userBasic.setId(1);
+        userBasic.setName("三月七");
+        Ticket ticket = new Ticket();
+        ticket.setTicketId("55265");
+        Order order = orderService.creatOrder(userBasic, ticket, "123456", "开拓者");
+        System.out.println();orderService.addOrder(order);
+
+    }
+
+    @Test
+    void test2(){
+        UserBasic userBasic = new UserBasic();
+        userBasic.setId(1035842);
+        List<Order> orders = orderService.getOrderByOwner(userBasic);
+        for(Order order: orders){
+            System.out.println(order.getOwner().getName());
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 //    @Autowired

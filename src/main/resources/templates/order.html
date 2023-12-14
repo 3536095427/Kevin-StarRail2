@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>车次信息</title>
+    <link rel="stylesheet"  href="../static/css/order.css" th:href="@{css/res.css}">
+</head>
+<body>
+<div class="back">
+    <table>
+        <tr><th colspan="7">我的订单</th></tr>
+        <tr>
+            <th>编号</th>
+            <th>始发站</th>
+            <th>终点站</th>
+            <th>发车时间</th>
+            <th>票价/￥</th>
+            <th>支付状态</th>
+            <th>操作</th>
+            <th></th>
+        </tr>
+        <tr th:if="${#lists.isEmpty(orderList)}">
+            <th colspan="7">您的订单空空如也</th>
+        </tr>
+        <tr th:each="order, iterStat : ${orderList}">
+            <td th:text="${iterStat.count}"></td>
+            <td th:text="${#temporals.format(ticket.startTime, 'MM月dd日 HH:mm')}"></td>
+            <td th:text="${#temporals.format(ticket.arrivalTime, 'MM月dd日 HH:mm')}"></td>
+            <td th:text="${ticket.time}"></td>
+            <td th:text="${ticket.distance}"></td>
+            <td th:text="${ticket.price}"></td>
+            <td th:if="${order.paymentStatus == 0}" style="padding: 0">
+                <form id="payment-form" th:action="@{/ticketList}" method="get"> <!-- 使用Thymeleaf的表达式设置action和method属性 -->
+                    <input type="hidden" name="ticketId" th:value="${ticket.ticketId}" /> <!-- 添加隐藏字段存储车票的ID -->
+                    <input type="hidden" name="startStation" th:value="${ticket.startStation}" /> <!-- 添加隐藏字段存储车票的ID -->
+                    <input type="hidden" name="destinationStation" th:value="${ticket.destinationStation}" /> <!-- 添加隐藏字段存储车票的ID -->
+                    <input type="submit" value="支付" /> <!-- 购买按钮 -->
+                </form>
+            </td>
+
+            <td style="padding: 0">
+                <form id="ticket-form" th:action="@{/ticketList}" method="get"> <!-- 使用Thymeleaf的表达式设置action和method属性 -->
+                    <input type="hidden" name="ticketId" th:value="${ticket.ticketId}" /> <!-- 添加隐藏字段存储车票的ID -->
+                    <input type="hidden" name="startStation" th:value="${ticket.startStation}" /> <!-- 添加隐藏字段存储车票的ID -->
+                    <input type="hidden" name="destinationStation" th:value="${ticket.destinationStation}" /> <!-- 添加隐藏字段存储车票的ID -->
+                    <input type="submit" value="详情" /> <!-- 购买按钮 -->
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

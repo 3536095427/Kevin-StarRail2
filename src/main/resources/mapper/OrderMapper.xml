@@ -21,11 +21,11 @@
     </resultMap>
 
     <insert id="addOrder" parameterType="Order">
-        INSERT INTO order_table (order_id, owner_id, generate_time, payment_status, ticket_id,passenger_name,passenger_id)
-        VALUES (#{orderId}, #{owner.id}, #{generateTime}, #{paymentStatus}, #{ticket.ticketId},#{passengerName},#{passengerId})
+        INSERT INTO `order` (order_id, owner_id, generate_time, payment_status, ticket_id,passenger_name,passenger_id)
+        VALUES (#{orderId}, #{owner.id}, #{generateTime, jdbcType=TIMESTAMP}, #{paymentStatus}, #{ticket.ticketId},#{passengerName},#{passengerId})
     </insert>
 
     <select id="getOrderByOwnerID" resultMap="OrderResultMap">
-        select * from order where owner_id = #{ownerId}
+        select * from `order` where owner_id = #{ownerId}
     </select>
 </mapper>

@@ -32,8 +32,8 @@
     <insert id="addTicket" parameterType="Ticket">
         INSERT INTO ticket (ticket_id, start_station, destination_station, start_time, arrival_time, distance, time, price, path_info)
         VALUES (#{ticketId},
-                #{startStation},
-                #{destinationStation},
+                (select id from station where station.name =  #{startStation}),
+                (select id from station where station.name =  #{destinationStation}),
                 #{startTime},
                 #{arrivalTime},
                 #{distance},
