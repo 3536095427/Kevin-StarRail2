@@ -5,8 +5,7 @@ import com.atguigu.logicalmodel.Service.TicketService;
 import com.atguigu.logicalmodel.pojo.Ticket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -24,7 +23,14 @@ public class TravelPathController {
     @Autowired
     private TicketService ticketService;
 
-    @RequestMapping("/consult")
+    @GetMapping("/consult")
+    public ModelAndView returnFormOrders(ModelAndView mav){
+        mav.setViewName("consult");
+        return mav;
+    }
+
+
+    @PostMapping("/consult")
     public ModelAndView consult(@RequestParam("start") String start,
                           @RequestParam("destination") String destination,
                           @RequestParam("date") String startDate,
@@ -51,7 +57,7 @@ public class TravelPathController {
             Random random = new Random();
             // 车票的数量范围 5 - 10
             int ticketsNum = random.nextInt(6) + 5;
-            tickets = ticketService.generateRandomTickets(LocalDate.parse(startDate), start, destination, 10);
+            tickets = ticketService.generateRandomTickets(LocalDate.parse(startDate), start, destination,ticketsNum );
 
             // 讲起点和终点的字符串组合作为键，讲查询到的车票放入缓存
             session.setAttribute(start+destination, tickets);

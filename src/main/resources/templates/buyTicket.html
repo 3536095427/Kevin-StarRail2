@@ -8,7 +8,7 @@
     <body>
         <div class="container">
             <div class="ticket-info-form">
-                <h2>车票信息</h2>
+                <h2 >车票信息</h2>
                 <div class="info-item">
                     <label>始发站：</label>
                     <span id="start" th:text="${session.ticket.startStation}">hahah</span>
@@ -37,7 +37,7 @@
             <div class="passenger-info-form">
                 <h2>添加乘车人</h2>
                 <!-- 乘车人信息表单 -->
-                <form id="buyTicket" th:action="@{/buyTicket}" method="get">
+                <form id="buyTicket" th:action="@{/buyTicket}" method="post">
                     <div class="form-group">
                         <label for="name">姓名</label>
                         <input type="text" id="name" name="name" required>

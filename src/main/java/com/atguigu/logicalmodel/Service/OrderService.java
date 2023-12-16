@@ -13,4 +13,8 @@ public interface OrderService {
     List<Order> getOrderByOwner(UserBasic owner);
 
     Order creatOrder(UserBasic owner,Ticket ticket,String passengerId,String passengerName);
+
+    boolean deleteOrderByOrderId(String orderId);
+
+    boolean payOrder(String orderId);
 }

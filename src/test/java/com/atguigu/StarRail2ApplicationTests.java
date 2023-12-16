@@ -1,6 +1,7 @@
 package com.atguigu;
 
 import com.atguigu.logicalmodel.Service.OrderService;
+import com.atguigu.logicalmodel.Service.TicketService;
 import com.atguigu.logicalmodel.Service.UserBasicService;
 import com.atguigu.logicalmodel.pojo.Order;
 import com.atguigu.logicalmodel.pojo.Ticket;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import sun.text.resources.da.FormatData_da;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -20,6 +22,9 @@ class StarRail2ApplicationTests {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private TicketService ticketService;
 
     @Test
     void test(){
@@ -40,7 +45,16 @@ class StarRail2ApplicationTests {
         userBasic.setId(1035842);
         List<Order> orders = orderService.getOrderByOwner(userBasic);
         for(Order order: orders){
-            System.out.println(order.getOwner().getName());
+            System.out.println(order);
+        }
+    }
+
+    @Test
+    void test3(){
+        List<Ticket> tickets = ticketService.generateRandomTickets(LocalDate.now(), "乌鲁木齐", "成都", 12);
+
+        for (Ticket ticket : tickets){
+            System.out.println(ticket);
         }
     }
 

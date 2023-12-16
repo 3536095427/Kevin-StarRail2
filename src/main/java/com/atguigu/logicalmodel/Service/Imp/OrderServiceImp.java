@@ -1,5 +1,6 @@
 package com.atguigu.logicalmodel.Service.Imp;
 
+import cn.hutool.core.util.RandomUtil;
 import com.atguigu.logicalmodel.Mapper.OrderMapper;
 import com.atguigu.logicalmodel.Service.OrderService;
 import com.atguigu.logicalmodel.pojo.Order;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class OrderServiceImp implements OrderService {
@@ -25,20 +25,29 @@ public class OrderServiceImp implements OrderService {
 
     @Override
     public List<Order> getOrderByOwner(UserBasic owner) {
-        return orderMapper.getOrderByOwnerID(owner.getId());
+        return orderMapper.getOrderByOwnerId(owner.getId());
     }
 
     @Override
     public Order creatOrder(UserBasic owner,Ticket ticket, String passengerId, String passengerName) {
 
-        Random random = new Random();
-        StringBuilder orderId = new StringBuilder(10);
-        for (int i = 0; i < 10; i++) {
-            orderId.append(random.nextInt(10)); // 生成 0 到 9 之间的随机数字
-        }
-
+        // 随机订单ID
+        String orderId = RandomUtil.randomNumbers(10);
+        // 获取订单生成时间
         LocalDateTime now = LocalDateTime.now();
 
-        return new Order(orderId.toString(),owner,passengerName,passengerId,now,0,ticket);
+        return new Order(orderId,owner,passengerName,passengerId,now,0,ticket);
+    }
+
+    @Override
+    public boolean deleteOrderByOrderId(String orderId) {
+        int res = orderMapper.deleteOrderByOrderId(orderId);
+        return res != 0;
+    }
+
+    @Override
+    public boolean payOrder(String orderId) {
+        int res = orderMapper.payOrder(orderId);
+        return res != 0;
     }
 }

@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+    background-image: url(../img/列车组.png);
+    background-repeat: no-repeat;
+    background-size: 100% ;
+    display: flex;
+    justify-content: center;
+    background-position: center;
+    height: 770px;
+    width: 1485px;
+}
+
+.container {
+    font-size: 20px;
+    width: 380px;
+    height: 460px;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* 设置容器的背景颜色和不透明度 */
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 80px;
+    margin-right: 800px;
+}
+
+
+.info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+.train-item{
+    display: flex;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+label,span {
+    display: block;
+    margin-bottom: 10px;
+}
+
+button {
+    display: inline-block;
+    width: 30%;
+    padding: 10px;
+    border: none;
+    background-color: rgba(76, 175, 80, 0.8);
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+
+#buttonGroup {
+    display: flex;
+}
+

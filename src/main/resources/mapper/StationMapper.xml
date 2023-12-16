@@ -12,8 +12,4 @@
         select id ,name from station where id = #{id};
     </select>
 
-    <select id="getStationNameById" resultType="string">
-        select name from station where id = #{id};
-    </select>
-
 </mapper>

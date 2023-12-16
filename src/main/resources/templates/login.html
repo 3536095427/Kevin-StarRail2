@@ -3,14 +3,14 @@
 <head>
 	<meta charset="utf-8" />
   <title>登录</title>
-    <link rel="stylesheet" th:href="@{css/login.css}">
+    <link rel="stylesheet" href="../static/css/login.css" th:href="@{css/login.css}">
 </head>
 <!--        <link rel="stylesheet" th:href="/css/login.css">-->
 <body>
     <div class="back">
         <div class="container">
             <h2>欢迎来到星穹列车</h2>
-            <form id="login-form" th:action="@{/login}" action="user.do" method="get">
+            <form id="login-form" th:action="@{/login}" action="user.do" method="post">
                 <!--      这里特别重要-->
                 <input type="hidden" name="operate" value="login"/>
 

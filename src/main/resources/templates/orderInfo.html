@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/orderInfo.css" th:href="@{css/orderInfo.css}">
+</head>
+<body>
+    <div class="container">
+        <div id="order-form" th:action="@{/orderOperate}" action="user.do" method="get">
+            <div class="ticket-info-form">
+                <div class="train-item">
+                    <!--车次信息-->
+                    <span id="TrainNum" style="width: 100%;font-size: 20px" th:text="${order.ticket.trainInfo}">车次信息</span>
+                </div>
+                <div class="train-item">
+                    <span id="startAndEnd" style="width: 100%;font-size: 31px;" th:text="${order.ticket.startStation} +  ' ---> ' + ${order.ticket.destinationStation}">昆明 ---> 成都 </span>
+                </div>
+                <div class="train-item">
+                    <!--经过的时间段-->
+                    <span id="startTime"  style="width: 100%;font-size: 20px;color: #007bff" th:text="${#temporals.format(order.ticket.startTime, 'MM月dd日 HH:mm')} + ' --> ' + ${#temporals.format(order.ticket.arrivalTime, 'MM月dd日 HH:mm')} ">12月14日 20:07 --> 12月15日 05:31</span>
+                </div>
+
+                <div class="info-item">
+                    <label>乘客：</label>
+                    <span id="passengerName" th:text="${order.passengerName}">hahah</span>
+                </div>
+
+                <div class="info-item">
+                    <label>座位：</label>
+                    <span id="seatInfo" th:text="${order.ticket.seatInfo}">座位信息</span>
+                </div>
+                <div class="info-item">
+                    <label>票价：</label>
+                    <span id="price" th:text="${order.ticket.price}">18</span>
+                </div>
+                <div class="info-item" style="color: #555555; font-size: 15px">
+                    <label>下单时间：</label>
+                    <span id="generateTime" style="color: #555555; font-size: 15px" th:text="${#temporals.format(order.generateTime, 'MM月dd日 HH:mm')}">12月15日 05:31</span>
+                </div>
+            </div>
+            <div id="buttonGroup">
+                <button id="cancelBtn" class="cancel-btn" style="display: none;background-color: #2c92b2" onclick="cancelPurchase()">取消</button>
+                <button type="submit" id="confirmBtn" style="display: none;background-color: #bd3712">
+                    <a th:href="@{/deletePaidOrder(orderId=${order.orderId})}"  href="https://localhost:8887/consult" style="text-decoration: none;color: #fff;">确认</a>
+                </button>
+            </div>
+            <button id="reBack" style="background-color: #2c92b2;"><a th:href="@{/consult}" href="https://localhost:8887/consult" style="text-decoration: none;color: #fff;">返回</a></button>
+            <button id="changeTicket" type="submit">改签</button>
+            <button id="deleteTicket" type="submit" onclick="showConfirmButtons()">退票</button>
+
+        </div>
+    </div>
+
+
+
+    <script>
+        function showConfirmButtons() {
+            var changeTicket = document.getElementById('changeTicket');
+            var reBack = document.getElementById('reBack');
+            var deleteTicket = document.getElementById('deleteTicket');
+
+            changeTicket.style.display = 'none';
+            reBack.style.display = 'none';
+            deleteTicket.style.display = 'none';
+
+            var cancelBtn = document.getElementById('cancelBtn');
+            var confirmBtn = document.getElementById('confirmBtn');
+
+
+            cancelBtn.style.display = 'inline-block';
+            cancelBtn.style.width = '45%'
+            cancelBtn.style.marginRight = "5%"
+            confirmBtn.style.display = 'inline-block';
+            confirmBtn.style.width = '45%'
+
+        }
+
+        function cancelPurchase() {
+            var changeTicket = document.getElementById('changeTicket');
+            var reBack = document.getElementById('reBack');
+            var deleteTicket = document.getElementById('deleteTicket');
+
+            changeTicket.style.display = 'inline-block';
+            reBack.style.display = 'inline-block';
+            deleteTicket.style.display = 'inline-block';
+
+            var cancelBtn = document.getElementById('cancelBtn');
+            var confirmBtn = document.getElementById('confirmBtn');
+
+
+            cancelBtn.style.display = 'none';
+            confirmBtn.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

@@ -7,11 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -20,26 +19,18 @@ public class UserController {
     @Qualifier("userBasicService")
     private UserBasicService userBasicService;
 
-
-
-
-
-
-
     @GetMapping(value = {"/", "/index"})
     public String login() {
         return "login";
     }
 
 
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public ModelAndView login(@RequestParam("loginId") Integer loginId,
                               @RequestParam("password") String password,
                               ModelAndView mav,
                               HttpSession session) {
         UserBasic userBasic = userBasicService.Login(loginId, password);
-
-        System.out.println("哈哈哈，成功进入登录方法");
 
         if (userBasic == null) {
             System.out.println("登陆失败");

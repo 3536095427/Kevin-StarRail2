@@ -56,7 +56,7 @@ public class InfoInit {
 
         List<Travel> travelList = travelMapper.selectList(lambdaQueryWrapper);
 
-        Integer numOfStation = stationMapper.selectCount(null);
+        int numOfStation = Math.toIntExact(stationMapper.selectCount(null));
 
         Integer[][] disRectangle = new Integer[numOfStation + 1][numOfStation + 1];
         Integer[][] moneyRectangle = new Integer[numOfStation + 1][numOfStation + 1];

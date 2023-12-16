@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("order")
+@ToString
 public class Order {
     private String orderId;
     private UserBasic owner;
@@ -20,4 +22,10 @@ public class Order {
     private LocalDateTime generateTime;
     private int paymentStatus;
     private Ticket ticket;
+
+
+    @Override
+    public int hashCode() {
+        return orderId != null ? orderId.hashCode() : 0;
+    }
 }

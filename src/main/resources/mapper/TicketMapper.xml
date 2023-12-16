@@ -12,6 +12,8 @@
         <result column="time" property="time"></result>
         <result column="price" property="price"></result>
         <result column="path_info" property="pathInfo"></result>
+        <result column="seat_info" property="seatInfo"></result>
+        <result column="train_info" property="trainInfo"></result>
 
         <!--        传入一个StationId，然后得到StationName-->
         <association property="startStation"
@@ -25,12 +27,12 @@
 
 
     <select id="getTicketById" resultMap="ticketStationMap">
-       select * from ticket where ticket.ticket.id = #{id};
+       select * from ticket where ticket.ticket_id = #{id};
     </select>
 
 
     <insert id="addTicket" parameterType="Ticket">
-        INSERT INTO ticket (ticket_id, start_station, destination_station, start_time, arrival_time, distance, time, price, path_info)
+        INSERT INTO ticket (ticket_id, start_station, destination_station, start_time, arrival_time, distance, time, price, path_info,seat_info,train_info)
         VALUES (#{ticketId},
                 (select id from station where station.name =  #{startStation}),
                 (select id from station where station.name =  #{destinationStation}),
@@ -39,7 +41,9 @@
                 #{distance},
                 #{time},
                 #{price},
-                #{pathInfo}
+                #{pathInfo},
+                #{seatInfo},
+                #{trainInfo}
                )
     </insert>
 </mapper>

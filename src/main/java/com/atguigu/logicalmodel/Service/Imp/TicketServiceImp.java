@@ -1,5 +1,6 @@
 package com.atguigu.logicalmodel.Service.Imp;
 
+import cn.hutool.core.util.RandomUtil;
 import com.atguigu.logicalmodel.Mapper.TicketMapper;
 import com.atguigu.logicalmodel.Service.TicketService;
 import com.atguigu.logicalmodel.Service.TravelService;
@@ -32,7 +33,8 @@ public class TicketServiceImp implements TicketService {
 
     @Override
     public int addTicket(Ticket ticket) {
+        // 重新生成车票Id，防止无法二次购买同一车次的的车票
+        ticket.setTicketId(RandomUtil.randomNumbers(8));
         return ticketMapper.addTicket(ticket);
     }
-
 }
